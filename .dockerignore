@@ -1,0 +1,19 @@
+# Dependencies and caches
+node_modules
+.next
+out
+coverage
+*.log
+npm-debug.log
+yarn-error.log
+
+# VCS and editor files
+.git
+.gitignore
+.vscode
+.DS_Store
+
+# Environment and local data
+.env
+.env.*
+*.local

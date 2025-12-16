@@ -1,0 +1,84 @@
+/* components/SelectedProjects.module.css */
+
+.carouselContainer {
+  position: relative;
+  width: 100%;
+}
+
+.scrollArea {
+  display: flex;
+  gap: 1rem; /* Расстояние между карточками */
+  overflow-x: auto; /* Включаем горизонтальную прокрутку */
+  scroll-snap-type: x mandatory; /* Включаем примагничивание по оси X */
+  scrollbar-width: none; /* Скрываем стандартный скроллбар для Firefox */
+  -ms-overflow-style: none; /* Скрываем стандартный скроллбар для IE/Edge */
+  padding: 0.5rem; /* Небольшой отступ, чтобы тени карточек не обрезались */
+  margin: -0.5rem; /* Компенсируем отступ */
+}
+
+/* Скрываем стандартный скроллбар для Chrome/Safari/Opera */
+.scrollArea::-webkit-scrollbar {
+  display: none;
+}
+
+.snapItem {
+  flex: 0 0 auto; /* Карточки не должны сжиматься или растягиваться */
+  scroll-snap-align: start; /* Примагничиваем карточку к началу контейнера (с учетом scroll-padding) */
+  /* Ширина рассчитывается так, чтобы вместить целое число карточек + отступы */
+  width: calc(100% - 1rem); /* 1 карточка на мобильных */
+  display: flex; /* Для растягивания дочернего элемента */
+}
+
+/* Медиа-запросы для адаптивности */
+@media (min-width: 768px) {
+  .snapItem {
+    /* 2 карточки на планшетах */
+    width: calc((100% - 1rem) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .snapItem {
+    /* 3 карточки на десктопах */
+    width: calc((100% - 2rem) / 3);
+  }
+}
+
+/* Стили для кнопок-стрелок */
+.arrowButton {
+  /* Стилизация под дизайн сайта */
+  background: linear-gradient(180deg,rgba(17,165,125,0.08),rgba(17,165,125,0.04));
+  box-shadow: 0 1px 0 0 var(--line) inset, 0 0 0 1px rgba(255,255,255,0.02);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  border-radius: 9999px; /* fully rounded */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.arrowButton:hover {
+  /* Эффект при наведении */
+  background: linear-gradient(180deg,rgba(17,165,125,0.12),rgba(17,165,125,0.08));
+  transform: scale(1.05);
+}
+
+.arrowButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  background: linear-gradient(180deg,rgba(17,165,125,0.08),rgba(17,165,125,0.04));
+}
+
+.arrowContainer {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  padding: 4px;
+  background: rgba(255,255,255,0.02);
+}

@@ -1,0 +1,57 @@
+services:
+  webapp:
+    build:
+      context: ./weboff-webapp
+      dockerfile: Dockerfile
+    env_file:
+      - ./weboff-webapp/.env
+    environment:
+      # Override API URL to reach Strapi service via Docker network
+      - STRAPI_API_URL=http://strapi:1337
+      - NODE_ENV=production
+      - DB_PATH=/database/weboff.db
+    depends_on:
+      - strapi
+    expose:
+      - "3000"
+    networks:
+      - weboff-net
+    volumes:
+      - ./database:/database
+    restart: unless-stopped
+
+  strapi:
+    build:
+      context: ./weboff-strapi
+      dockerfile: Dockerfile
+    env_file:
+      - ./weboff-strapi/.env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_CLIENT=sqlite
+      - DATABASE_FILENAME=/srv/app/.tmp/data.db
+    expose:
+      - "1337"
+    networks:
+      - weboff-net
+    volumes:
+      - ./weboff-strapi/strapi-uploads:/srv/app/public/uploads
+      - ./weboff-strapi/.tmp:/srv/app/.tmp
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - webapp
+      - strapi
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - weboff-net
+    restart: unless-stopped
+
+networks:
+  weboff-net:
+    driver: bridge

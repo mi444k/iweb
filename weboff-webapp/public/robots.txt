@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /impressum
+Disallow: /impressum/
+Disallow: /privacy
+Disallow: /privacy/
+Disallow: /privacy/en
+Disallow: /cookies
+Disallow: /cookies/
+Disallow: /cookies/en
