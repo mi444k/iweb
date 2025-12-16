@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       {
         protocol: strapi.protocol.replace(":", ""),
         hostname: strapi.hostname,
-        port: strapi.port || undefined,
+        ...(strapi.port ? { port: strapi.port } : {}),
         pathname: "/**",
       },
     ],
